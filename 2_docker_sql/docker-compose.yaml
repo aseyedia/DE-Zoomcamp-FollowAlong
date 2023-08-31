@@ -1,12 +1,12 @@
 services:
-  pgdatabase:
+  pg-database:
     image: postgres:13
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=ny_taxi
     volumes:
-      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+      - "ny_taxi_postgres_data_volume:/var/lib/postgresql/data:rw"
     ports:
       - "5432:5432"
   pgadmin:
@@ -16,9 +16,16 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "8080:80"
+volumes:
+  ny_taxi_postgres_data_volume:
+    external: true
+
+#docker volume create ny_taxi_postgres_data_volume
 
 #docker network create pg-network
 #
+
+# STEP 1: TO RUN POSTGRES SERVER
 #docker run -it \
 #  -e POSTGRES_USER="root" \
 #  -e POSTGRES_PASSWORD="root" \
@@ -29,6 +36,7 @@ services:
 #  --name pg-database \
 #  postgres:13
 
+# OPTIONAL: TO RUN PGADMIN INTERACTIVELY
 # docker run -it \
 #  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
 #  -e PGADMIN_DEFAULT_PASSWORD="root" \
@@ -38,8 +46,10 @@ services:
 #  dpage/pgadmin4
 
 
-# pgcli -h localhost -u root -d ny_taxi
+# pgcli -h 172.31.227.86 -u root -d ny_taxi
+#
 
+# STEP 2: INGEST DATA TO SQL DATABASE IN VOLUME
 #url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
 #
 #python ingest_data.py \
@@ -51,8 +61,10 @@ services:
 #  --table_name=yellow_taxi_trips \
 #  --url=${url}
 
-#docker build -t taxi_ingest:v001 .
-
+# STEP 3: BUILD DOCKER CONTAINER
+# docker build -t taxi_ingest:v001 .
+#
+# STEP 4: RUN DOCKER WORKFLOW
 #URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
 #
 #docker run -it \
