@@ -8,8 +8,12 @@ from time import time
 
 import pandas as pd
 from sqlalchemy import create_engine
+from prefect import flow, task
 
 
+# flows are like function; takes inputs, gives outputs
+
+@task(log_prints=True, retries=3)
 def main(params):
     user = params.user
     password = params.password
@@ -30,7 +34,7 @@ def main(params):
 
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
-    df = pd.read_csv(csv_name, low_memory=False) # I have 32 Gigs of RAM lol
+    df = pd.read_csv(csv_name, low_memory=False)  # I have 32 Gigs of RAM lol
 
     df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
     df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
@@ -38,7 +42,8 @@ def main(params):
     df.to_sql(name=table_name, con=engine, if_exists='append')
 
 
-if __name__ == '__main__':
+@flow(name="Ingest Flow")
+def main():
     parser = argparse.ArgumentParser(description='Ingest CSV data to Postgres')
 
     parser.add_argument('--user', required=True, help='user name for postgres')
@@ -52,3 +57,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     main(args)
+
+
+if __name__ == '__main__':
+    main()
