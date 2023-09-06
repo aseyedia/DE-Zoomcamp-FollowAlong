@@ -32,8 +32,8 @@ volumes:
 #  -e POSTGRES_DB="ny_taxi" \
 #  -v ny_taxi_postgres_data_volume:/var/lib/postgresql/data \
 #  -p 5432:5432 \
-#  --network=pg-network \
-#  --name pg-database \
+##  --network=pg-network \
+##  --name pg-database \
 #  postgres:13
 
 # OPTIONAL: TO RUN PGADMIN INTERACTIVELY

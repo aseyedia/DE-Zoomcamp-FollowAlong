@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import os
 
-os.chdir("C:\\Users\\artas\GitHub_Repos\\DE-Zoomcamp-FollowAlong\\2_docker_sql")
+os.chdir("/week_1_basics_n_setup/2_docker_sql")
 
 df = pd.read_csv('yellow_tripdata_2021-01.csv', low_memory=False)
 
