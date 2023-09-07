@@ -6,3 +6,5 @@ week_1_basics_n_setup/2_docker_sql/yellow_tripdata_2021-01.csv
 .idea/
 
 *.iml
+
+week_1_basics_n_setup/1_terraform_gcp/dtc-de-398314-7a55baf20543.json
