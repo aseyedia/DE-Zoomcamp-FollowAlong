@@ -85,3 +85,43 @@ For an interactive bash session with the gcloud command available:
 docker start gcloud-config
 docker exec -it gcloud-config bash
 ```
+
+### Mounting Google Service Account Credentials to Docker Image
+
+**1. Locate your Service Account JSON Key:**
+
+First, make sure you have your service account key in JSON format. This is typically provided when you create a service account on Google Cloud Console. Let's assume the path to this file on your Windows system is `C:\path\to\your\service-account-key.json`.
+
+**2. Run the Google Cloud SDK Docker Image with a Mounted Volume:**
+
+You'll want to mount the directory containing your service account key to a directory in the container. 
+
+Here's an example:
+
+```bash
+docker run -it -v /c/path/to:/tmp/keys google/cloud-sdk:latest /bin/bash
+```
+
+This command mounts the `C:\path\to/directory` from your Windows host to `/tmp/keys` inside the Docker container. The `-v` option in docker run is used for volume mounting.
+
+**3. Activate the Service Account Inside the Docker Environment:**
+
+Once you're inside the Docker environment, you can activate the service account using:
+
+```bash
+gcloud auth activate-service-account --key-file=/tmp/keys/service-account-key.json
+```
+
+After running this command, the gcloud CLI will use this service account for all subsequent commands.
+
+**4. Verification:**
+
+Verify that the service account is now active:
+
+```bash
+gcloud auth list
+```
+
+This will show you which accounts are currently authenticated in this environment, and the service account should be among them.
+
+**Note:** Be cautious when handling service account keys. They provide access to your GCP resources, so always manage and store them securely. Avoid pushing images that contain your service account keys and always keep them out of public repositories and places where unauthorized individuals might access them.
