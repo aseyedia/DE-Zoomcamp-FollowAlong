@@ -8,3 +8,11 @@ week_1_basics_n_setup/2_docker_sql/yellow_tripdata_2021-01.csv
 *.iml
 
 week_1_basics_n_setup/1_terraform_gcp/dtc-de-398314-7a55baf20543.json
+
+week_1_basics_n_setup/1_terraform_gcp/.terraform/providers/registry.terraform.io/hashicorp/google/4.81.0/windows_amd64/
+
+week_1_basics_n_setup/1_terraform_gcp/.terraform.lock.hcl
+
+week_1_basics_n_setup/1_terraform_gcp/.terraform/
+
+week_1_basics_n_setup/1_terraform_gcp/terraform.tfstate
