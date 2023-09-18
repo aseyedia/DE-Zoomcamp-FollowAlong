@@ -47,6 +47,7 @@ volumes:
 
 
 # pgcli -h 172.31.227.86 -u root -d ny_taxi
+# pgcli -h localhost -u root -d ny_taxi
 #
 
 # STEP 2: INGEST DATA TO SQL DATABASE IN VOLUME
