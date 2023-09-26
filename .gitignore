@@ -16,3 +16,5 @@ week_1_basics_n_setup/1_terraform_gcp/.terraform.lock.hcl
 week_1_basics_n_setup/1_terraform_gcp/.terraform/
 
 week_1_basics_n_setup/1_terraform_gcp/terraform.tfstate
+
+*.parquet
