@@ -3,12 +3,12 @@
 ###
 name: Parameterized ETL
 description: null
-version: 10b6c5d80cd46a059f4ebb5c5b0f5087
+version: 2739bd6c2e895c6ebd610a01ebc95ff5
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: null
 tags: []
-parameters: {"color": "yellow", "months" :[1, 2, 3], "year": 2021}
+parameters: {}
 schedule: null
 is_schedule_active: null
 infra_overrides: {}
@@ -29,8 +29,8 @@ infrastructure:
 flow_name: etl-parent-flow
 manifest_path: null
 storage: null
-path: /mnt/c/Users/artas/GitHub_Repos/DE-Zoomcamp-FollowAlong
-entrypoint: week_2_workflow_orchestration/flows/03-deployments/parameterized_flow.py:etl_parent_flow
+path: /Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong/week_2_workflow_orchestration/flows/03-deployments
+entrypoint: parameterized_flow.py:etl_parent_flow
 parameter_openapi_schema:
   title: Parameters
   type: object
@@ -56,5 +56,6 @@ parameter_openapi_schema:
       type: string
   required: null
   definitions: null
-timestamp: '2023-10-02T19:14:21.044720+00:00'
+timestamp: '2024-01-03T15:42:07.471063+00:00'
 triggers: []
+enforce_parameter_schema: null
