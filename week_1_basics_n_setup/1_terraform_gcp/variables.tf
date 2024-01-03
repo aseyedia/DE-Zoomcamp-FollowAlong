@@ -9,7 +9,7 @@ variable "project_id" {
 
 variable "credentials_path" {
   description = "Path to the GCP service account credentials JSON file"
-  default     = "C:\\Users\\artas\\GitHub_Repos\\DE-Zoomcamp-FollowAlong\\week_1_basics_n_setup\\1_terraform_gcp\\dtc-de-398314-7a55baf20543.json"
+  default     = "/Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong/week_1_basics_n_setup/1_terraform_gcp/dtc-de-398314-7a55baf20543.json"
 }
 
 variable "region" {

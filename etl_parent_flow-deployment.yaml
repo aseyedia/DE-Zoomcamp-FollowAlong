@@ -38,7 +38,7 @@ infrastructure:
   block_type_slug: process
   _block_type_slug: process
 storage: null
-path: /mnt/c/Users/artas/GitHub_Repos/DE-Zoomcamp-FollowAlong
+path: /Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong/
 entrypoint: week_2_workflow_orchestration/flows/03-deployments/parameterized_flow.py:etl_parent_flow
 parameter_openapi_schema:
   title: Parameters

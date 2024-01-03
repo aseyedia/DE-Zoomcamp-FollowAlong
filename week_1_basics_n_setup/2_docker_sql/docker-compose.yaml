@@ -20,61 +20,24 @@ volumes:
   ny_taxi_postgres_data_volume:
     external: true
 
-#docker volume create ny_taxi_postgres_data_volume
+# # Instantiate volume
+# docker volume create ny_taxi_postgres_data_volume
 
-#docker network create pg-network
-#
+# # Instantiate network
+# docker network create pg-network
 
-# STEP 1: TO RUN POSTGRES SERVER
-#docker run -it \
-#  -e POSTGRES_USER="root" \
-#  -e POSTGRES_PASSWORD="root" \
-#  -e POSTGRES_DB="ny_taxi" \
-#  -v ny_taxi_postgres_data_volume:/var/lib/postgresql/data \
-#  -p 5432:5432 \
-##  --network=pg-network \
-##  --name pg-database \
-#  postgres:13
+# # Call docker compose in 2_docker_sql/
+# docker compose up
 
-# OPTIONAL: TO RUN PGADMIN INTERACTIVELY
-# docker run -it \
-#  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
-#  -e PGADMIN_DEFAULT_PASSWORD="root" \
-#  -p 8080:80 \
-#  --network=pg-network \
-#  --name pg-admin \
-#  dpage/pgadmin4
+# # Ingest data
+# url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
 
-
-# pgcli -h 172.31.227.86 -u root -d ny_taxi
-# pgcli -h localhost -u root -d ny_taxi
-#
-
-# STEP 2: INGEST DATA TO SQL DATABASE IN VOLUME
-#url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
-#
-#python ingest_data.py \
+# python ingest_data.py \
 #  --user=root \
 #  --password=root \
-#  --host=172.31.227.86 \
+#  --host=localhost \
 #  --port=5432 \
 #  --db=ny_taxi \
 #  --table_name=yellow_taxi_trips \
 #  --url=${url}
 
-# STEP 3: BUILD DOCKER CONTAINER
-# docker build -t taxi_ingest:v001 .
-#
-# STEP 4: RUN DOCKER WORKFLOW
-#URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
-#
-#docker run -it \
-#  --network=pg-network \
-#  taxi_ingest:v001 \
-#    --user=root \
-#    --password=root \
-#    --host=pg-database \
-#    --port=5432 \
-#    --db=ny_taxi \
-#    --table_name=yellow_taxi_trips \
-#    --url=${URL}

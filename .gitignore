@@ -21,3 +21,4 @@ week_1_basics_n_setup/1_terraform_gcp/terraform.tfstate
 
 week_2_workflow_orchestration/flows/03-deployments/__pycache__/parameterized_flow.cpython-311.pyc
 .DS_Store
+week_1_basics_n_setup/1_terraform_gcp/terraform.tfstate.backup

@@ -12,7 +12,7 @@ df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
 
 from sqlalchemy import create_engine
 
-engine = create_engine('postgresql://root:root@172.31.227.86:5432/ny_taxi') # connecting to WSL instance
+engine = create_engine('postgresql://root:root@localhost:5432/ny_taxi')
 
 print(pd.io.sql.get_schema(df, name='yellow_taxi_data', con=engine))
 

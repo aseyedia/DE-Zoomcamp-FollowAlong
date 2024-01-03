@@ -37,7 +37,7 @@ def transform(path: Path) -> pd.DataFrame:
 def write_bq(df: pd.DataFrame) -> None:
     """Write DataFrame to BiqQuery"""
 
-    gcp_credentials_block = GcpCredentials.load("zoom-gcp-creds")
+    gcp_credentials_block = GcpCredentials.load("gcp-cloud")
 
     df.to_gbq(
         destination_table="trips_data_all.rides",
