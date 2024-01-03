@@ -5,13 +5,13 @@ from prefect_gcp.cloud_storage import GcsBucket
 from random import randint
 from prefect.tasks import task_input_hash
 from datetime import timedelta
-from pyhere import here
+# from pyhere import here
 
 # pyhere.set_here("/Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong")
 # running prefect agent start --work-queue "default" doesn't work
 # did python parameterized_flow.py
 
-@task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
+@task(retries=3)
 def fetch(dataset_url: str) -> pd.DataFrame:
     """Read taxi data from web into pandas DataFrame"""
     # if randint(0, 1) > 0:
@@ -35,7 +35,9 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 @task()
 def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     """Write DataFrame out locally as parquet file"""
-    path = Path(f"/Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong/week_2_workflow_orchestration/flows/02_gcp/data/{color}/{dataset_file}.parquet") # needs absolute path for some reason
+    data_dir = f'data/{color}'
+    Path(data_dir).mkdir(parents=True, exist_ok=True)
+    path = Path(f'{data_dir}/{dataset_file}.parquet')
     df.to_parquet(path, compression="gzip")
     return path
 

@@ -1,0 +1,6 @@
+pandas
+prefect-gcp[cloud_storage]
+protobuf
+pyarrow
+pandas-gbq
+# pyhere
