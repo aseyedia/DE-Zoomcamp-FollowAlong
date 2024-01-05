@@ -24,12 +24,20 @@ def fetch(dataset_url: str) -> pd.DataFrame:
 @task(log_prints=True)
 def clean(df: pd.DataFrame) -> pd.DataFrame:
     """Fix dtype issues"""
-    df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
-    df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
+
+    # Check if 'tpep_pickup_datetime' column exists before converting
+    if 'tpep_pickup_datetime' in df.columns:
+        df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
+
+    # Check if 'tpep_dropoff_datetime' column exists before converting
+    if 'tpep_dropoff_datetime' in df.columns:
+        df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
+
     print(df.head(2))
     print(f"columns: {df.dtypes}")
     print(f"rows: {len(df)}")
     return df
+
 
 
 @task()
@@ -46,7 +54,10 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
 def write_gcs(path: Path) -> None:
     """Upload local parquet file to GCS"""
     gcs_block = GcsBucket.load("zoom-gcs")
-    gcs_block.upload_from_path(from_path=path, to_path=path)
+    # Had to increase the timeout time for some reason, default 60. Didn't have this problem with larger files.
+    # https://prefecthq.github.io/prefect-gcp/cloud_storage/#prefect_gcp.cloud_storage.GcsBucket.upload_from_path
+    # https://cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob#google_cloud_storage_blob_Blob_upload_from_filename
+    gcs_block.upload_from_path(from_path=path, to_path=path, timeout=300)
     return
 
 
@@ -61,17 +72,18 @@ def etl_web_to_gcs(year: int, month: int, color: str) -> None:
     path = write_local(df_clean, color, dataset_file)
     write_gcs(path)
 
-
 @flow()
 def etl_parent_flow(
-    months: list[int] = [1, 2], year: int = 2021, color: str = "yellow"
+    months: list[int] = [1, 2], years: list[int] = [2021], colors: list[str] = ["yellow"]
 ):
-    for month in months:
-        etl_web_to_gcs(year, month, color)
-
+    for color in colors:
+        current_years = [2019] if color == "fhv" else years
+        for year in current_years:
+            for month in months:
+                etl_web_to_gcs(year, month, color)
 
 if __name__ == "__main__":
-    color = "yellow"
-    months = [1, 2, 3]
-    year = 2021
-    etl_parent_flow(months, year, color)
+    colors = ["fhv"]
+    months = [i for i in range(1, 13)]
+    years = [2019, 2020]
+    etl_parent_flow(months, years, colors)
