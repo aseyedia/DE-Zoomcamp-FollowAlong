@@ -6,9 +6,6 @@ sources:
       #For bigquery:
       database: dtc-de-398314
 
-      # For postgres:
-      #database: production
-
       schema: trips_data_all
 
       # loaded_at_field: record_loaded_at
