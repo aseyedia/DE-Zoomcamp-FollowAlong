@@ -8,6 +8,9 @@ sources:
 
       schema: trips_data_all
 
+      # For postgres:
+      # database: production
+
       # loaded_at_field: record_loaded_at
       tables:
         - name: green_tripdata
