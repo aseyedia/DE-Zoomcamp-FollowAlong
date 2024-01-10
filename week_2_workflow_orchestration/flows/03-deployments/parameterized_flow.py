@@ -45,8 +45,8 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     """Write DataFrame out locally as parquet file"""
     data_dir = f'data/{color}'
     Path(data_dir).mkdir(parents=True, exist_ok=True)
-    path = Path(f'{data_dir}/{dataset_file}.parquet')
-    df.to_parquet(path, compression="gzip")
+    path = Path(f'{data_dir}/{dataset_file}.csv')
+    df.to_csv(path, compression="gzip")
     return path
 
 
