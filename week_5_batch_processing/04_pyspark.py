@@ -15,7 +15,6 @@ df = spark.read \
 
 df.show(5)
 
-
 from pyspark.sql import types
 schema = types.StructType(
     [
@@ -36,7 +35,7 @@ df = spark.read \
 
 df.schema
 
-df_pandas = pd.read_csv("/Users/artas/GithubProjects/DE-Zoomcamp-FollowAlong/week_5_batch_processing/fhvhv_tripdata_2021-01.csv.gz")
+df_pandas = pd.read_csv("fhvhv_tripdata_2021-01.csv.gz")
 
 spark.createDataFrame(df_pandas).show()
 
